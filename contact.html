@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact – ASIACORP Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="ASIACORP Management">
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleNav()">&#9776;</button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="our-services.html">Our Services</a></li>
+        <li><a href="incorporation-packages.html">Incorporation Packages</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+      <a href="incorporation-packages.html#GetStarted" class="btn-cta">Request Quote Now</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" style="background-image: url('images/hero-contact.jpg');">
+    <div class="hero-content">
+      <h1>CONTACT US</h1>
+      <div class="hero-divider"></div>
+      <p>We'd love to hear from you. Drop us a message using the form below and we'll get back to you as soon as we can.</p>
+    </div>
+    <div class="hero-wave">
+      <svg viewBox="0 0 1440 270" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,135 C360,270 1080,0 1440,135 L1440,270 L0,270 Z" fill="#ffffff"/>
+    </svg>
+    </div>
+  </section>
+
+  <!-- CONTACT PAGE CONTENT -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-page-grid">
+
+        <!-- Left: Get In Touch info -->
+        <div class="contact-info">
+          <h2>Get In Touch</h2>
+          <p><i class="fa-solid fa-location-dot"></i> 60 Paya Lebar Road #05-07 Paya Lebar Square<br>Singapore 409051</p>
+          <div class="hours">
+            <h4><i class="fa-regular fa-clock"></i> Office Hours</h4>
+            <table>
+              <tr>
+                <td>Mon &ndash; Fri</td>
+                <td>9:00 am &ndash; 6:00 pm</td>
+              </tr>
+              <tr>
+                <td>Sat &ndash; Sun</td>
+                <td>Closed</td>
+              </tr>
+            </table>
+          </div>
+          <div class="social-row">
+            <a href="https://www.facebook.com/asiacorpmanagement" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i> Facebook</a>
+            <a href="mailto:support@asiacorp.sg"><i class="fa-solid fa-envelope"></i> support@asiacorp.sg</a>
+            <a href="https://wa.me/6588745596" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp: +65 8874 5596</a>
+          </div>
+        </div>
+
+        <!-- Right: Contact form -->
+        <div>
+          <h2 class="form-title">Contact Us</h2>
+          <p class="form-desc">Drop us a message in the form below and we'll get back to you as soon as possible.</p>
+          <form>
+            <div class="form-group">
+              <label for="c-name">NAME</label>
+              <input type="text" id="c-name" name="name">
+            </div>
+            <div class="form-group">
+              <label for="c-phone">PHONE</label>
+              <input type="tel" id="c-phone" name="phone">
+            </div>
+            <div class="form-group">
+              <label for="c-email">EMAIL</label>
+              <input type="email" id="c-email" name="email">
+            </div>
+            <div class="form-group">
+              <label>I AM INTERESTED IN</label>
+              <div class="checkbox-group">
+                <label><input type="checkbox" name="interest" value="Incorporation Package"> Incorporation Package</label>
+                <label><input type="checkbox" name="interest" value="Accounting & Tax Services"> Accounting &amp; Tax Services</label>
+                <label><input type="checkbox" name="interest" value="Work Visa Application"> Work Visa Application</label>
+                <label><input type="checkbox" name="interest" value="Company Secretary Switchover"> Company Secretary Switchover</label>
+                <label><input type="checkbox" name="interest" value="GST Registration & Filing"> GST Registration &amp; Filing</label>
+                <label><input type="checkbox" name="interest" value="Other Matters"> Other Matters</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="c-msg">MESSAGE</label>
+              <textarea id="c-msg" name="message"></textarea>
+            </div>
+            <button type="submit" class="btn-green">Send</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="images/logo-white.png" alt="ASIACORP">
+        </div>
+        <p>
+          ASIACORP MANAGEMENT PTE. LTD.<br>
+          UEN 202111538E<br>
+          60 Paya Lebar Road #05-07 Paya Lebar Square<br>
+          Singapore 409051
+        </p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/asiacorpmanagement" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="mailto:support@asiacorp.sg"><i class="fa-solid fa-envelope"></i> Email</a>
+          <a href="https://wa.me/6588745596" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Services</h4>
+        <ul>
+          <li>Company Incorporation</li>
+          <li>Company Secretary</li>
+          <li>Accounting &amp; Tax</li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-copy">Copyright &copy; 2021&#8211;2023 Asiacorp Management Pte. Ltd. &mdash; All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/emailjs-forms.js"></script>
+</body>
+</html>

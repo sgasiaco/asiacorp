@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASIACORP Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="ASIACORP Management">
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleNav()">&#9776;</button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="our-services.html">Our Services</a></li>
+        <li><a href="incorporation-packages.html">Incorporation Packages</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="incorporation-packages.html#GetStarted" class="btn-cta">Request Quote Now</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" style="background-image: url('images/hero-home.jpg');">
+    <div class="hero-content">
+      <h1>Welcome to Singapore</h1>
+      <h2>YOUR GATEWAY TO ASIA AND THE WORLD!</h2>
+      <p>STARTING YOUR NEXT BUSINESS VENTURE?<br>YOU'VE COME TO THE RIGHT PLACE!</p>
+      <a href="#ContactUs" class="btn-pill">Let's Talk!</a>
+    </div>
+    <div class="hero-wave">
+      <svg viewBox="0 0 1440 270" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,135 C360,270 1080,0 1440,135 L1440,270 L0,270 Z" fill="#ffffff"/>
+    </svg>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Your Trusted Corporate Services Provider</h2>
+        <p class="sub">EVERYTHING YOU NEED AT ONE PLACE</p>
+      </div>
+      <div class="features-layout">
+
+        <!-- Left: image -->
+        <div class="features-image">
+          <img src="images/features-bg.png" alt="Professional corporate services">
+        </div>
+
+        <!-- Right: stacked feature cards -->
+        <div class="features-list">
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <div class="feature-text">
+              <h3>Comprehensive Solutions at Affordable Prices</h3>
+              <p>Our solutions are designed specifically for you. We know what you'll need. We anticipate what's next and deliver them on time.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-tag"></i></div>
+            <div class="feature-text">
+              <h3>Transparent Pricing with no hidden fees</h3>
+              <p>Our support team provides you professional advice, assurance and timely action, so that you can focus on your core business.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-handshake"></i></div>
+            <div class="feature-text">
+              <h3>Professional Advice with Friendly support</h3>
+              <p>Our support team provides you professional advice, assurance and timely action, so that you can focus on your core business.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div class="feature-text">
+              <h3>Speed, Convenience and Efficiency</h3>
+              <p>With quick and accurate responses to all your queries, we'll save you time and costs. You'll be amazed how efficient we are.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section-services">
+    <div class="section-header" style="padding: 3rem 2rem 2rem; background-color: var(--green);margin-bottom: 0px;">
+      <h2 style=" color: var(--white)!important;">Professional services at affordable prices</h2>
+    </div>
+    <div class="services-img-grid">
+      <a href="our-services.html" class="svc-img-card" style="background-image: url('images/service1-bg.jpg');">
+        <div class="svc-overlay">
+          <h3>Company Incorporation</h3>
+          <p>Company Registration for Residents and Foreigners</p>
+        </div>
+      </a>
+      <a href="our-services.html" class="svc-img-card" style="background-image: url('images/service2-bg.jpg');">
+        <div class="svc-overlay">
+          <h3>Accounting &amp; Tax</h3>
+          <p>Accounting, Corporate Tax, GST, Bookkeeping</p>
+        </div>
+      </a>
+      <a href="our-services.html" class="svc-img-card" style="background-image: url('images/service3-bg.jpg');">
+        <div class="svc-overlay">
+          <h3>Work Visa</h3>
+          <p>Employment pass, Dependent Pass applications</p>
+        </div>
+      </a>
+      <a href="our-services.html" class="svc-img-card" style="background-image: url('images/service4-bg.jpg');">
+        <div class="svc-overlay">
+          <h3>Annual Compliance</h3>
+          <p>Preparation and Filing of ACRA Annual Returns</p>
+        </div>
+      </a>
+      <a href="our-services.html" class="svc-img-card" style="background-image: url('images/service5-bg.jpg');">
+        <div class="svc-overlay">
+          <h3>Support Services</h3>
+          <p>Applications for Licences &amp; Permits, Trademark, Mail Support</p>
+        </div>
+      </a>
+      <a href="our-services.html" class="svc-img-card" style="background-image: url('images/service6-bg.jpg');">
+        <div class="svc-overlay">
+          <h3>GST Registration</h3>
+          <p>Register for GST, Preparations of Quarterly Returns</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section class="section" id="ContactUs">
+    <div class="container">
+      <div class="contact-inline">
+        <h2>Contact Us</h2>
+        <p class="desc">We'd love to hear from you. Drop us a message using the form below and we'll get back to you as soon as we can.</p>
+        <form>
+          <div class="form-group">
+            <label for="h-name">NAME</label>
+            <input type="text" id="h-name" name="name">
+          </div>
+          <div class="form-group">
+            <label for="h-phone">PHONE</label>
+            <input type="tel" id="h-phone" name="phone">
+          </div>
+          <div class="form-group">
+            <label for="h-email">EMAIL</label>
+            <input type="email" id="h-email" name="email">
+          </div>
+          <div class="form-group">
+            <label for="h-msg">MESSAGE</label>
+            <textarea id="h-msg" name="message"></textarea>
+          </div>
+          <button type="submit" class="btn-green">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="images/logo-white.png" alt="ASIACORP">
+        </div>
+        <p>
+          ASIACORP MANAGEMENT PTE. LTD.<br>
+          UEN 202111538E<br>
+          60 Paya Lebar Road #05-07 Paya Lebar Square<br>
+          Singapore 409051
+        </p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/asiacorpmanagement" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a href="mailto:support@asiacorp.sg"><i class="fa-solid fa-envelope"></i> Email</a>
+          <a href="https://wa.me/6588745596" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Services</h4>
+        <ul>
+          <li>Company Incorporation</li>
+          <li>Company Secretary</li>
+          <li>Accounting &amp; Tax</li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-copy">Copyright &copy; 2021&#8211;2023 Asiacorp Management Pte. Ltd. &mdash; All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/emailjs-forms.js"></script>
+</body>
+</html>
