@@ -582,9 +582,9 @@ footer {
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   }
   .nav-menu.open { display: flex; }
-  .nav-menu a { padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; }
+  .nav-menu a { padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color:var(--green)!important;}
   .nav-menu a:last-child { border-bottom: none; }
-  .nav-toggle { display: block; }
+  .nav-toggle { display: block; color:var(--white)!important;}
   .btn-cta { display: none; }
 
   .hero-content h1 { font-size: 2rem; }
