@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoDaddy DNS Setup for GitHub Pages</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f4f6fb;
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ─────────────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, #24292f 0%, #0d1117 100%);
+      color: #fff;
+      padding: 48px 32px 40px;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    header p  { font-size: 1.05rem; color: #8b949e; max-width: 600px; margin: 0 auto; }
+
+    /* ── OVERVIEW CHIPS ──────────────────────────────────── */
+    .meta-bar {
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+      background: #161b22; padding: 16px 32px;
+    }
+    .chip {
+      background: #21262d; border: 1px solid #30363d;
+      color: #8b949e; border-radius: 999px;
+      font-size: 0.8rem; padding: 4px 14px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .chip span { color: #c9d1d9; font-weight: 600; }
+
+    /* ── LAYOUT ──────────────────────────────────────────── */
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+
+    /* ── OVERVIEW BOX ────────────────────────────────────── */
+    .overview {
+      background: #fff; border-radius: 12px;
+      border-left: 5px solid #0969da;
+      padding: 24px 28px; margin-bottom: 40px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+    .overview h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .06em; color: #0969da; margin-bottom: 10px; }
+    .overview p  { color: #444; font-size: 0.95rem; }
+
+    /* ── STEP CARD ───────────────────────────────────────── */
+    .step {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      margin-bottom: 36px; overflow: hidden;
+    }
+    .step-header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 28px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .step-num {
+      background: #0969da; color: #fff;
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; flex-shrink: 0;
+    }
+    .step-num.godaddy { background: #1bab4b; }
+    .step-title { font-size: 1.15rem; font-weight: 700; color: #0d1117; }
+    .step-subtitle { font-size: 0.85rem; color: #768390; margin-top: 2px; }
+
+    .step-body { padding: 24px 28px; }
+    .step-body p { color: #444; margin-bottom: 14px; font-size: 0.95rem; }
+
+    /* ── INSTRUCTION LIST ────────────────────────────────── */
+    ol.instructions { padding-left: 0; list-style: none; counter-reset: inst; }
+    ol.instructions li {
+      counter-increment: inst;
+      display: flex; gap: 14px;
+      margin-bottom: 12px; align-items: flex-start;
+      font-size: 0.95rem; color: #333;
+    }
+    ol.instructions li::before {
+      content: counter(inst);
+      background: #dbeafe; color: #1d4ed8;
+      min-width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; margin-top: 1px;
+    }
+
+    /* ── SCREENSHOT MOCK ─────────────────────────────────── */
+    .mock {
+      background: #f6f8fa; border: 1px solid #d0d7de;
+      border-radius: 10px; overflow: hidden;
+      margin: 20px 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.09);
+    }
+    .mock-bar {
+      background: #24292f; padding: 9px 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .mock-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .mock-bar .url-pill {
+      flex: 1; background: #161b22; border-radius: 999px;
+      font-size: 0.73rem; color: #8b949e;
+      padding: 3px 14px; margin: 0 8px;
+    }
+    .mock-content { padding: 20px 22px; }
+    .mock-label {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: #768390; margin-bottom: 14px;
+      display: flex; align-items: center; gap-6px;
+    }
+    .mock-field {
+      background: #fff; border: 1px solid #d0d7de; border-radius: 6px;
+      padding: 7px 12px; font-size: 0.85rem;
+      color: #1f2328; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .mock-field.active { border-color: #0969da; box-shadow: 0 0 0 3px #0550ae33; }
+    .mock-input-row {
+      display: flex; gap: 8px; align-items: center; margin-bottom: 12px;
+    }
+    .mock-input {
+      flex: 1; background: #fff; border: 1px solid #d0d7de; border-radius: 6px;
+      padding: 6px 12px; font-size: 0.85rem; color: #24292f;
+    }
+    .mock-btn {
+      background: #2da44e; color: #fff; border: none;
+      border-radius: 6px; padding: 6px 16px; font-size: 0.83rem;
+      font-weight: 600; cursor: pointer; white-space: nowrap;
+    }
+    .mock-btn.grey { background: #6e7681; }
+    .mock-section-title {
+      font-size: 0.95rem; font-weight: 700; color: #1f2328;
+      margin-bottom: 4px;
+    }
+    .mock-section-desc { font-size: 0.82rem; color: #57606a; margin-bottom: 14px; }
+    .mock-sidebar {
+      background: #f6f8fa; border-right: 1px solid #d0d7de;
+      width: 190px; padding: 14px 0; float: left; min-height: 160px;
+    }
+    .mock-sidebar-item {
+      padding: 7px 18px; font-size: 0.82rem; color: #57606a; cursor: pointer;
+    }
+    .mock-sidebar-item.active {
+      background: #dbeafe; color: #0969da; font-weight: 700;
+      border-right: 3px solid #0969da;
+    }
+    .mock-main { margin-left: 200px; padding: 18px; }
+    .clearfix::after { content: ""; display: table; clear: both; }
+    .highlight-box {
+      background: #fff8c5; border: 1px solid #f4cc22;
+      border-radius: 6px; padding: 10px 14px;
+      font-size: 0.83rem; color: #633800; margin-top: 10px;
+    }
+    .success-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #dafbe1; border: 1px solid #2da44e;
+      color: #116329; border-radius: 999px; padding: 3px 10px; font-size: 0.78rem; font-weight: 600;
+    }
+    .https-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #0969da; color: #fff;
+      border-radius: 4px; padding: 2px 7px; font-size: 0.75rem; font-weight: 700;
+    }
+
+    /* ── DNS TABLE ───────────────────────────────────────── */
+    .dns-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 16px 0; }
+    .dns-table th {
+      background: #1bab4b; color: #fff;
+      padding: 9px 14px; text-align: left; font-weight: 600;
+    }
+    .dns-table tr:nth-child(even) td { background: #f0fdf4; }
+    .dns-table td { padding: 8px 14px; border-bottom: 1px solid #e2e8f0; color: #1a1a2e; font-family: monospace; }
+    .dns-table td.label { font-family: inherit; font-weight: 600; color: #444; }
+
+    /* ── GODADDY MOCK ────────────────────────────────────── */
+    .mock-bar.godaddy { background: #1bab4b; }
+    .gd-header {
+      background: #1bab4b; color: #fff; padding: 12px 18px;
+      font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 8px;
+    }
+    .gd-row {
+      display: grid; grid-template-columns: 90px 80px 1fr 90px 80px;
+      gap: 10px; align-items: center; padding: 8px 14px;
+      font-size: 0.8rem; border-bottom: 1px solid #e9ecef;
+    }
+    .gd-row.header { background: #f8f9fa; font-weight: 700; color: #555; border-bottom: 2px solid #dee2e6; }
+    .gd-row.new { background: #f0fdf4; border: 1px dashed #2da44e; border-radius: 6px; margin: 6px 10px; }
+    .mono { font-family: "SFMono-Regular", Consolas, monospace; font-size: 0.78rem; }
+    .tag {
+      display: inline-block; padding: 2px 7px; border-radius: 4px;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    }
+    .tag.a    { background: #dbeafe; color: #1d4ed8; }
+    .tag.cname{ background: #f3e8ff; color: #6d28d9; }
+    .tag.aaaa { background: #fce7f3; color: #9d174d; }
+
+    /* ── ALERT BOXES ─────────────────────────────────────── */
+    .alert {
+      border-radius: 8px; padding: 14px 18px;
+      font-size: 0.88rem; margin: 16px 0;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .alert.warning { background: #fff8c5; border-left: 4px solid #d4a017; color: #633800; }
+    .alert.info    { background: #dbeafe; border-left: 4px solid #0969da; color: #0c2a6e; }
+    .alert.success { background: #dafbe1; border-left: 4px solid #2da44e; color: #0a3622; }
+    .alert-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .alert strong { display: block; margin-bottom: 2px; }
+
+    /* ── CHECKLIST ───────────────────────────────────────── */
+    .checklist { list-style: none; padding: 0; }
+    .checklist li {
+      display: flex; gap: 10px; align-items: center;
+      padding: 8px 0; border-bottom: 1px solid #f0f0f0;
+      font-size: 0.92rem; color: #333;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box {
+      width: 20px; height: 20px; border: 2px solid #d0d7de;
+      border-radius: 4px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .check-box.done { background: #2da44e; border-color: #2da44e; color: #fff; font-size: 0.75rem; }
+
+    /* ── PROPAGATION BAR ─────────────────────────────────── */
+    .timeline {
+      display: flex; gap: 0; margin: 18px 0; border-radius: 8px; overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .tl-seg { flex: 1; padding: 10px 0; text-align: center; font-size: 0.78rem; font-weight: 600; }
+    .tl-seg.now   { background: #dbeafe; color: #0969da; }
+    .tl-seg.soon  { background: #dafbe1; color: #116329; }
+    .tl-seg.later { background: #f6f8fa; color: #57606a; }
+    .tl-seg.max   { background: #fff3cd; color: #856404; }
+    .tl-seg span  { display: block; font-size: 0.68rem; font-weight: 400; opacity: .85; margin-top: 2px; }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      background: #0d1117; color: #8b949e;
+      text-align: center; padding: 28px 20px;
+      font-size: 0.82rem; margin-top: 20px;
+    }
+    footer a { color: #58a6ff; text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .mock-sidebar { float: none; width: 100%; }
+      .mock-main { margin-left: 0; }
+      .gd-row { grid-template-columns: 60px 60px 1fr; }
+      .gd-row .gd-ttl, .gd-row .gd-act { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════ HEADER ════════════════════ -->
+<header>
+  <h1>🟢 GoDaddy DNS Setup for GitHub Pages</h1>
+  <p>Configure your GoDaddy DNS records to point your custom domain at GitHub Pages.</p>
+</header>
+<div class="meta-bar">
+  <div class="chip">🔧 Registrar: <span>GoDaddy</span></div>
+  <div class="chip">🚀 Host: <span>GitHub Pages</span></div>
+  <div class="chip">⏱ Time: <span>~10 min</span> (+ DNS propagation)</div>
+</div>
+
+<!-- ════════════════════ CONTAINER ════════════════════ -->
+<div class="container">
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num godaddy">1</div>
+      <div>
+        <div class="step-title">Delete the Default "www" CNAME Record</div>
+        <div class="step-subtitle">GoDaddy DNS Management</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>GoDaddy pre-creates a CNAME record for <code>www</code> pointing back to your own domain. You <strong>must delete this</strong> before adding the GitHub one — otherwise it will conflict.</p>
+      <div class="mock">
+        <div class="mock-bar godaddy"></div>
+        <div class="mock-content">
+          <div class="gd-row header">
+            <div>Type</div><div>Name</div><div>Value</div><div class="gd-ttl">TTL</div><div class="gd-act">Action</div>
+          </div>
+          <div class="gd-row">
+            <div><span class="tag cname">CNAME</span></div>
+            <div class="mono">www</div>
+            <div class="mono">@</div>
+            <div class="gd-ttl mono">1 hr</div>
+            <div class="gd-act" style="color:#cf222e; font-weight:700; cursor:pointer; font-size:0.8rem;">🗑 Delete ◀</div>
+          </div>
+        </div>
+      </div>
+      <div class="alert warning">
+        <div class="alert-icon">⚠️</div>
+        <div><strong>Important:</strong> Look for a CNAME with Name <code>www</code> and Value <code>@</code> (or your domain name). Delete it before proceeding.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 — Check/remove existing A records -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num godaddy">2</div>
+      <div>
+        <div class="step-title">Check for &amp; Remove Any Existing "A" Records</div>
+        <div class="step-subtitle">GoDaddy DNS Management — clear conflicts before adding new ones</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>If your domain was previously pointing to a web host, a website builder (like Wix or Squarespace), or a parked page, GoDaddy may already have one or more <strong>A records</strong> set on <code>@</code>. These <strong>must be removed</strong> — leaving them alongside the new GitHub IPs will cause unpredictable routing and DNS errors.</p>
+      <p>Scroll through your DNS records and look for any rows where <strong>Type = A</strong> and <strong>Name = @</strong>. For each one you find, click the pencil (✏️) icon to edit or the trash (🗑) icon to delete it.</p>
+      <div class="mock">
+        <div class="mock-bar godaddy"></div>
+        <div class="mock-content">
+          <div class="gd-row header">
+            <div>Type</div><div>Name</div><div>Value</div><div class="gd-ttl">TTL</div><div class="gd-act">Action</div>
+          </div>
+          <div class="gd-row" style="background:#fff0f0;">
+            <div><span class="tag a">A</span></div>
+            <div class="mono">@</div>
+            <div class="mono" style="color:#cf222e;">198.185.159.144 <em style="font-size:0.7rem;">(old host IP)</em></div>
+            <div class="gd-ttl mono">1 hr</div>
+            <div class="gd-act" style="color:#cf222e; font-weight:700; cursor:pointer; font-size:0.8rem;">🗑 Delete ◀</div>
+          </div>
+          <div class="gd-row" style="background:#fff0f0;">
+            <div><span class="tag a">A</span></div>
+            <div class="mono">@</div>
+            <div class="mono" style="color:#cf222e;">198.185.159.145 <em style="font-size:0.7rem;">(old host IP)</em></div>
+            <div class="gd-ttl mono">1 hr</div>
+            <div class="gd-act" style="color:#cf222e; font-weight:700; cursor:pointer; font-size:0.8rem;">🗑 Delete ◀</div>
+          </div>
+        </div>
+      </div>
+      <div class="alert warning">
+        <div class="alert-icon">⚠️</div>
+        <div>
+          <strong>Only delete A records with Name <code>@</code>.</strong> Leave any A records for subdomains (e.g., Name = <code>mail</code> or <code>ftp</code>) untouched — those belong to other services like email.
+        </div>
+      </div>
+      <div class="alert info">
+        <div class="alert-icon">ℹ️</div>
+        <div>
+          <strong>No existing A records?</strong> That's fine — just skip this step and move on to Step 3.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num godaddy">3</div>
+      <div>
+        <div class="step-title">Add 4 "A" Records for the Apex Domain</div>
+        <div class="step-subtitle">GoDaddy DNS — pointing root domain to GitHub's servers</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>These A records tell the internet: <em>"When someone visits asiacorp.sg, send them to GitHub's servers."</em> You need to add <strong>all four</strong> records. Click <strong>Add New Record</strong> for each one.</p>
+
+      <table class="dns-table">
+        <thead>
+          <tr><th>Type</th><th>Name</th><th>Value (Points To)</th><th>TTL</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="tag a">A</span></td><td>@</td><td>185.199.108.153</td><td>600 sec</td></tr>
+          <tr><td><span class="tag a">A</span></td><td>@</td><td>185.199.109.153</td><td>600 sec</td></tr>
+          <tr><td><span class="tag a">A</span></td><td>@</td><td>185.199.110.153</td><td>600 sec</td></tr>
+          <tr><td><span class="tag a">A</span></td><td>@</td><td>185.199.111.153</td><td>600 sec</td></tr>
+        </tbody>
+      </table>
+
+      <div class="mock">
+        <div class="mock-bar godaddy"></div>
+        <div class="mock-content">
+          <div style="font-size:0.82rem; font-weight:700; margin-bottom:8px; color:#333;">Add a New Record</div>
+          <div style="display:grid; grid-template-columns: 100px 80px 1fr 80px; gap:8px; align-items:center; font-size:0.8rem; margin-bottom:8px;">
+            <div>
+              <div style="font-size:0.7rem; color:#777; margin-bottom:2px;">Type</div>
+              <div class="mock-field active" style="font-weight:700;">A</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:#777; margin-bottom:2px;">Name</div>
+              <div class="mock-field active">@</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:#777; margin-bottom:2px;">Value</div>
+              <div class="mock-field active">185.199.108.153</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:#777; margin-bottom:2px;">TTL</div>
+              <div class="mock-field active">600</div>
+            </div>
+          </div>
+          <div class="mock-btn" style="display:inline-block; margin-top:4px;">Save ✓</div>
+          <div style="font-size:0.75rem; color:#888; margin-top:6px;">Repeat for all 4 IP addresses above.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num godaddy">4</div>
+      <div>
+        <div class="step-title">Add a CNAME Record for "www"</div>
+        <div class="step-subtitle">GoDaddy DNS — optional but strongly recommended</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>This ensures that <code>www.asiacorp.sg</code> also works and redirects to your site. Add <strong>one</strong> CNAME record:</p>
+
+      <table class="dns-table">
+        <thead>
+          <tr><th>Type</th><th>Name</th><th>Value (Points To)</th><th>TTL</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag cname">CNAME</span></td>
+            <td>www</td>
+            <td>sgasiaco.github.io/asiacorp</td>
+            <td>600 sec</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mock">
+        <div class="mock-bar godaddy"></div>
+        <div class="mock-content">
+          <div style="font-size:0.82rem; font-weight:700; margin-bottom:8px; color:#333;">Add a New Record</div>
+          <div style="display:grid; grid-template-columns: 100px 80px 1fr 80px; gap:8px; align-items:center; font-size:0.8rem;">
+            <div>
+              <div style="font-size:0.7rem; color:#777; margin-bottom:2px;">Type</div>
+              <div class="mock-field active" style="font-weight:700;">CNAME</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:#777; margin-bottom:2px;">Name</div>
+              <div class="mock-field active">www</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:#777; margin-bottom:2px;">Value</div>
+              <div class="mock-field active">sgasiaco.github.io/asiacorp</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:#777; margin-bottom:2px;">TTL</div>
+              <div class="mock-field active">600</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="alert info">
+        <div class="alert-icon">ℹ️</div>
+        <div>The CNAME value <code>sgasiaco.github.io/asiacorp</code> points directly to your GitHub Pages repository.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 — Optional AAAA -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num godaddy">5</div>
+      <div>
+        <div class="step-title">(Optional) Add AAAA Records for IPv6</div>
+        <div class="step-subtitle">GoDaddy DNS — improves speed for modern networks</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>IPv6 records are optional but recommended for future-proofing and faster load times on modern networks. Add these 4 AAAA records, same way as the A records:</p>
+      <table class="dns-table">
+        <thead>
+          <tr><th>Type</th><th>Name</th><th>Value (Points To)</th><th>TTL</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="tag aaaa">AAAA</span></td><td>@</td><td>2606:50c0:8000::153</td><td>600 sec</td></tr>
+          <tr><td><span class="tag aaaa">AAAA</span></td><td>@</td><td>2606:50c0:8001::153</td><td>600 sec</td></tr>
+          <tr><td><span class="tag aaaa">AAAA</span></td><td>@</td><td>2606:50c0:8002::153</td><td>600 sec</td></tr>
+          <tr><td><span class="tag aaaa">AAAA</span></td><td>@</td><td>2606:50c0:8003::153</td><td>600 sec</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- STEP 6 — Verify DNS looks correct -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num godaddy">6</div>
+      <div>
+        <div class="step-title">Verify Your Final DNS Records</div>
+        <div class="step-subtitle">GoDaddy DNS Management — confirm everything looks right</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>When you're done, your DNS record list should look like this (with your actual domain and username):</p>
+      <div class="mock">
+        <div class="mock-bar godaddy"></div>
+        <div class="mock-content">
+          <div class="gd-row header">
+            <div>Type</div><div>Name</div><div>Value</div><div class="gd-ttl">TTL</div>
+          </div>
+          <div class="gd-row">
+            <div><span class="tag a">A</span></div><div class="mono">@</div><div class="mono">185.199.108.153</div><div class="gd-ttl mono">600s</div>
+          </div>
+          <div class="gd-row">
+            <div><span class="tag a">A</span></div><div class="mono">@</div><div class="mono">185.199.109.153</div><div class="gd-ttl mono">600s</div>
+          </div>
+          <div class="gd-row">
+            <div><span class="tag a">A</span></div><div class="mono">@</div><div class="mono">185.199.110.153</div><div class="gd-ttl mono">600s</div>
+          </div>
+          <div class="gd-row">
+            <div><span class="tag a">A</span></div><div class="mono">@</div><div class="mono">185.199.111.153</div><div class="gd-ttl mono">600s</div>
+          </div>
+          <div class="gd-row">
+            <div><span class="tag cname">CNAME</span></div><div class="mono">www</div><div class="mono">sgasiaco.github.io/asiacorp</div><div class="gd-ttl mono">600s</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div><!-- /container -->
+
+<footer>
+  <p>Guide based on official <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site">GitHub Pages documentation</a> &amp; GoDaddy DNS management.</p>
+  <p style="margin-top:6px; color:#444;">GitHub's IP addresses are subject to change — always verify at <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site">docs.github.com</a></p>
+</footer>
+
+</body>
+</html>
